@@ -2,28 +2,32 @@ import React from 'react';
 import { connect } from 'react-redux';
 import TodoItem from './TodoItem';
 import { addTodo } from '../actions/todos';
-import InputMoment from 'input-moment';
+import DatePicker from 'react-datepicker';
 import moment from 'moment';
-import 'input-moment/dist/input-moment.css';
-
+import 'react-datepicker/dist/react-datepicker.css';
 
 class Todos extends React.Component {
   constructor(props){
     super(props)
     this.state = {
       value: '',
-      startDate: moment()
+      startDate: moment(),
+      error: ''
     }
     
-    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
-    this.handleSave = this.handleSave.bind(this);
-  }
-  handleChange(event){
-    this.setState({value: event.target.value});
+    this.handleChange = this.handleChange.bind(this)
+    this.handleError = this.handleError.bind(this)
+
   }
   
+  handleChange(event){
+    this.setState({
+      value: event.target.value
+    })
+  }
+
   handleDateChange(date) {
      this.setState({
       startDate: date
@@ -34,40 +38,58 @@ class Todos extends React.Component {
   handleSubmit(event){
     event.preventDefault();
     const dateDispatch = moment(this.state.startDate._d).valueOf();
-    this.props.dispatch(addTodo({todo: this.state.value, startDate: dateDispatch}))
-    this.state = {
-      value: '',
-      startDate: this.state.startDate
+    if(!this.state.value){
+      this.setState({
+        error: 'Digite um todo...'
+      })
+    }else{
+      this.props.dispatch(addTodo({todo: this.state.value, startDate: dateDispatch}))
+      this.state = {
+        value: '',
+        startDate: this.state.startDate
+      }
     }
    }
-  handleSave(date){
-    console.log('save:', date)
-  }
+   
+   handleError(){
+     this.setState({
+       error: ''
+     })
+   }
+
   render(){
     return(
       <div>
-        <h1>Todos</h1>
-        { 
-          this.props.todos.map((todo, index)=>{
-            return <TodoItem key={index} todoItem={todo} />
-          })
-        }
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Todo:
-          <input type="text" name="todo" value={this.state.value} onChange={this.handleChange}/>
-        </label>
-        <InputMoment
-          moment={this.state.startDate}
-          onChange={this.handleDateChange}
-          onSave={this.handleSave}
-          minStep={1} // default
-          hourStep={1} // default
-          prevMonthIcon="ion-ios-arrow-left" // default
-          nextMonthIcon="ion-ios-arrow-right" // default
-        />
-        <button type="submit" value="Submit">enviar</button>
-      </form>
+          <div className="container">
+            <h1>Tarefas</h1>
+            <ul className="list-group">
+            { 
+              this.props.todos.map((todo, index)=>{
+                return <TodoItem key={index} todoItem={todo} />
+              })
+            }
+          </ul>
+          <form onSubmit={this.handleSubmit}>
+            <div className="input-group">
+              <span className="input-group-addon">Tarefa</span>
+              <input type="text" className="form-control" name="todo" onFocus={this.handleError} value={this.state.error ? this.state.error : this.state.value} onChange={this.handleChange}/>
+            </div>
+            <div className="input-group">
+              <span className="input-group-addon">Data</span>
+              <DatePicker
+                  className="form-control"
+                  selected={this.state.startDate}
+                  onChange={this.handleDateChange}
+                  showTimeSelect
+                  timeFormat="HH:mm"
+                  timeIntervals={15}
+                  dateFormat="LLL"
+                  timeCaption="time"
+              />
+            </div>
+            <button type="submit" className="btn btn-danger" value="Submit">enviar</button>
+          </form>
+        </div>
       </div>
     )
   }
