@@ -9,6 +9,13 @@ import 'react-datepicker/dist/react-datepicker.css';
 class Todos extends React.Component {
   constructor(props){
     super(props)
+    moment.locale('pt-br',null)
+    moment.updateLocale('pt-br', {
+        months : [
+            "Janeiro", "Fevereiro", "Marco", "April", "Maio", "Junho", "Julho",
+            "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+        ]
+    });
     this.state = {
       value: '',
       startDate: moment(),
@@ -82,7 +89,7 @@ class Todos extends React.Component {
                   onChange={this.handleDateChange}
                   showTimeSelect
                   timeFormat="HH:mm"
-                  timeIntervals={15}
+                  timeIntervals={10}
                   dateFormat="LLL"
                   timeCaption="time"
               />

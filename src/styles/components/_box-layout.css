@@ -1,0 +1,47 @@
+.container{
+    max-width:520px;
+}
+
+.task-item{
+    display: flow-root;
+}
+.task-item span:hover{
+    cursor:pointer;
+    color:red;
+}
+.list-group-item h4{
+    border-bottom: 1px solid #f5c4c4;
+    padding-bottom: 2px;
+}
+
+.list-group-item p {
+    margin:0;
+}
+
+.react-datepicker-wrapper{
+    display:block;
+    height:34px;
+}
+
+.input-group{
+    margin-bottom:10px;    
+}
+
+.inputEdit{
+    border: 0;
+    width: 100%;
+    border-bottom: 1px solid #f5c4c4;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-bottom: 2px;
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.1;
+    font-size:18px;
+    color: inherit;
+}
+
+.inputEdit:focus{
+    background:none;
+    outline:none;
+}
