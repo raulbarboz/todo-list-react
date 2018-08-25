@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
 import Todos from './components/Todos';
-import { addTodo } from './actions/todos';
+import { setTodosBefore } from './actions/todos';
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
 
@@ -16,4 +16,7 @@ const jsx = (
   </Provider>
 )
 
-ReactDOM.render(jsx, document.getElementById('app'));
+store.dispatch(setTodosBefore()).then(()=>{
+  ReactDOM.render(jsx, document.getElementById('app'));
+})
+

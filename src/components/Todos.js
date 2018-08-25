@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import TodoItem from './TodoItem';
-import { addTodo } from '../actions/todos';
+import { addTodoBefore } from '../actions/todos';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -50,7 +50,7 @@ class Todos extends React.Component {
         error: 'Digite um todo...'
       })
     }else{
-      this.props.dispatch(addTodo({todo: this.state.value, startDate: dateDispatch}))
+      this.props.dispatch(addTodoBefore({todo: this.state.value, startDate: dateDispatch}))
       this.state = {
         value: '',
         startDate: this.state.startDate
@@ -79,7 +79,13 @@ class Todos extends React.Component {
           <form onSubmit={this.handleSubmit}>
             <div className="input-group">
               <span className="input-group-addon">Tarefa</span>
-              <input type="text" className="form-control" name="todo" onFocus={this.handleError} value={this.state.error ? this.state.error : this.state.value} onChange={this.handleChange}/>
+              <input
+                type="text" 
+                className="form-control" 
+                name="todo" 
+                onFocus={this.handleError} 
+                value={this.state.error ? this.state.error : this.state.value} 
+                onChange={this.handleChange}/>
             </div>
             <div className="input-group">
               <span className="input-group-addon">Data</span>

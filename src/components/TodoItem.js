@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { connect } from 'react-redux';
-import { editTodo, removeTodo } from '../actions/todos';
+import { editTodoBefore, removeTodoBefore } from '../actions/todos';
 
 class TodoItem extends React.Component {
   constructor(props){
@@ -22,13 +22,13 @@ class TodoItem extends React.Component {
   
   handleToggle(){
     this.setState({toggleEdit:!this.state.toggleEdit})
-    this.props.dispatch(editTodo(this.props.todoItem.id, {todo:this.state.todo}))
+    this.props.dispatch(editTodoBefore(this.props.todoItem.id, {todo:this.state.todo}))
   }
   
   handleRemove(){
     this.setState({endDate: null})
     setTimeout(() => {
-      this.props.dispatch(removeTodo(this.props.todoItem.id))
+      this.props.dispatch(removeTodoBefore(this.props.todoItem.id))
     }, 1000)
     
   }
